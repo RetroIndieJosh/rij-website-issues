@@ -13,10 +13,20 @@ jobs:
           script: |
             const issue = context.payload.issue
             const owner = 'retroindiejosh'
-            const privateRepo = 'rij-website' // your private repo name
-            await github.rest.issues.create({
+            const privateRepo = 'rij-website' // your private repo
+            const newIssue = await github.rest.issues.create({
               owner,
               repo: privateRepo,
               title: `[Public] ${issue.title}`,
               body: `From [public issue #${issue.number}](${issue.html_url})\n\n---\n\n${issue.body || ''}`,
+              labels: ['from-public'] // creates label if it exists, else ignored
+            })
+
+            // Add an automatic reminder comment
+            await github.rest.issues.createComment({
+              owner,
+              repo: privateRepo,
+              issue_number: newIssue.data.number,
+              body: `🔗 **Reminder:** This issue originated from [public issue #${issue.number}](${issue.html_url}).  
+              When you close or resolve it here, remember to update the public version as well.`
             })
