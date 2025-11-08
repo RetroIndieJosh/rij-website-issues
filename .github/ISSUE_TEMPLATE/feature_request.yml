@@ -1,0 +1,40 @@
+name: Feature request
+description: Suggest a new feature or improvement
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for your idea! Please describe your request clearly below.
+  - type: input
+    id: summary
+    attributes:
+      label: Short summary
+      placeholder: e.g. Add dark mode toggle
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What problem or limitation does this feature address?
+      placeholder: e.g. The site is always in dark mode and I want a way to switch.
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How would you like it to work?
+      placeholder: Describe what you'd expect to happen.
+      validations:
+        required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Are there other ways to solve the same problem?
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context
+      description: Add mockups, links, or notes that help explain your idea.
