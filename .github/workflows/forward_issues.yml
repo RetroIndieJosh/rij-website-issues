@@ -1,0 +1,22 @@
+name: Mirror new issues to private repo
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          script: |
+            const issue = context.payload.issue
+            const owner = 'retroindiejosh'
+            const privateRepo = 'rij-website' // your private repo name
+            await github.rest.issues.create({
+              owner,
+              repo: privateRepo,
+              title: `[Public] ${issue.title}`,
+              body: `From [public issue #${issue.number}](${issue.html_url})\n\n---\n\n${issue.body || ''}`,
+            })
